@@ -3,3 +3,5 @@ dist
 node_modules
 .vscode-test/
 *.vsix
+external/github-vscode-theme/node_modules
+themes/*.json
