@@ -10,13 +10,14 @@ This file provides actionable instructions for AI assistants working on this VS 
 
 **Architecture**:
 - **Themes**: 9 GitHub-based themes (light/dark variations with high contrast and colorblind support) in `themes/`, generated from `external/github-vscode-theme` (git submodule pointing to https://github.com/thommadurasahan/github-vscode-theme.git)
+- **Fonts**: Atkinson Hyperlegible Next Mono font files copied from `external/atkinson-hyperlegible-next-mono` (git submodule pointing to https://github.com/thommadurasahan/atkinson-hyperlegible-next-mono.git) to `assets/fonts/`
 - **Extension Core**: `src/extension.ts` — activation logic, command handlers (TypeScript compiled to `out/extension.js`)
-- **Planned Features**: Custom Webview settings panel (not yet implemented), font bundling (not yet added)
+- **Planned Features**: Custom Webview settings panel (not yet implemented)
 
 ## Core Features (Implementation Status)
 
 ✅ **Color Theme Pack** — 9 themes registered in `package.json`, JSONs auto-generated via `npm run build:themes`
-⚠️ **Font Pack** — NOT YET IMPLEMENTED. Plan: bundle Atkinson Hyperlegible Next Mono in `assets/fonts/`, apply via settings panel
+✅ **Font Pack** — Atkinson Hyperlegible Next Mono TTF files in `assets/fonts/`, copied via `npm run build:fonts`
 ⚠️ **Accessibility Settings Panel** — Stub command exists (`openAccessibilityPanel`), needs Webview implementation in `src/panel/AccessibilityPanel.ts`
 
 ## Critical Commands & Workflows
@@ -26,6 +27,8 @@ This file provides actionable instructions for AI assistants working on this VS 
 npm run compile          # Compile TypeScript (tsc -p ./) → out/
 npm run watch            # Watch mode for src/*.ts changes
 npm run build:themes     # Generate themes from external/github-vscode-theme
+npm run build:fonts      # Copy fonts from external/atkinson-hyperlegible-next-mono
+npm run build:all        # Build both themes and fonts
 npm run lint             # Run ESLint on src/
 npm test                 # Run tests via @vscode/test-cli
 ```
@@ -34,6 +37,11 @@ npm test                 # Run tests via @vscode/test-cli
 1. `scripts/build-github-theme.js` runs `npm install` in `external/github-vscode-theme/` (if needed)
 2. Executes `npm run build` in that directory → generates `external/github-vscode-theme/themes/*.json`
 3. Copies all JSONs to `./themes/` (these are .gitignored; only package.json theme paths are tracked)
+
+### Font Build Pipeline
+1. `scripts/build-fonts.js` reads TTF files from `external/atkinson-hyperlegible-next-mono/fonts/ttf/`
+2. Copies all .ttf files to `./assets/fonts/` (these are .gitignored but included in .vsix package)
+3. Fonts are ready to be referenced in the settings panel via `editor.fontFamily`
 
 ### Testing the Extension
 Press `F5` in VS Code → opens Extension Development Host with extension loaded. Test commands via Command Palette (`Ctrl+Shift+P`).
@@ -66,11 +74,10 @@ Press `F5` in VS Code → opens Extension Development Host with extension loaded
   - "Apply Recommended Config" preset button (bulk update settings)
 
 ### Add Font Support (TODO)
-1. Download Atkinson Hyperlegible Next Mono from https://github.com/googlefonts/atkinson-hyperlegible-next-mono
-2. Place font files in `assets/fonts/`
-3. Update `package.json` to include `assets/` in `.vscodeignore` exclusions (if needed)
-4. In settings panel, set `editor.fontFamily` to `'Atkinson Hyperlegible Next Mono'` when user selects font
-5. Provide toggle to restore original font
+1. ✅ Font files already available in `assets/fonts/` (run `npm run build:fonts` to copy)
+2. In settings panel, set `editor.fontFamily` to `'Atkinson Hyperlegible Mono'` when user selects font
+3. Provide toggle to restore original font
+4. Note: VS Code will automatically find and use fonts from the extension's assets folder once installed
 
 ### Update Themes
 - Rebuild themes: `npm run build:themes` (requires network on first run)
@@ -79,9 +86,9 @@ Press `F5` in VS Code → opens Extension Development Host with extension loaded
 
 ## Dependencies & Integration
 
-**External Theme Repo**: `external/github-vscode-theme` is a git submodule. Run `git submodule update --init` if folder is empty.
+**External Theme Repo**: `external/github-vscode-theme` is a git submodule pointing to https://github.com/thommadurasahan/github-vscode-theme.git. Run `git submodule update --init` if folder is empty.
 
-**Font Source**: https://github.com/googlefonts/atkinson-hyperlegible-next-mono (NOT YET INTEGRATED)
+**Font Repo**: `external/atkinson-hyperlegible-next-mono` is a git submodule pointing to https://github.com/thommadurasahan/atkinson-hyperlegible-next-mono.git. Run `git submodule update --init` if folder is empty.
 
 **VS Code APIs**: Extension uses `vscode` module. Key namespaces:
 - `vscode.commands` — register commands
@@ -114,6 +121,7 @@ Press `F5` in VS Code → opens Extension Development Host with extension loaded
 |---------|-------|
 | Add/modify commands | `package.json`, `src/extension.ts` |
 | Theme generation | `scripts/build-github-theme.js`, `external/github-vscode-theme/` |
+| Font copying | `scripts/build-fonts.js`, `external/atkinson-hyperlegible-next-mono/` |
 | Settings panel | `src/panel/AccessibilityPanel.ts` (TO BE CREATED) |
 | Font integration | `assets/fonts/` (TO BE CREATED), settings panel logic |
 | Tests | `src/test/extension.test.ts` |

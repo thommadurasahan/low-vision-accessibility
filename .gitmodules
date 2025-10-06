@@ -1,3 +1,6 @@
 [submodule "external/github-vscode-theme"]
 	path = external/github-vscode-theme
 	url = https://github.com/thommadurasahan/github-vscode-theme.git
+[submodule "external/atkinson-hyperlegible-next-mono"]
+	path = external/atkinson-hyperlegible-next-mono
+	url = https://github.com/thommadurasahan/atkinson-hyperlegible-next-mono.git

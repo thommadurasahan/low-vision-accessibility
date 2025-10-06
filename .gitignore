@@ -5,3 +5,4 @@ node_modules
 *.vsix
 external/github-vscode-theme/node_modules
 themes/*.json
+assets/fonts/*.ttf
