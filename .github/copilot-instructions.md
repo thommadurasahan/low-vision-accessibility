@@ -9,7 +9,7 @@ This file provides actionable instructions for AI assistants working on this VS 
 **Goal**: A VS Code extension that combines accessible color themes, Atkinson Hyperlegible font, and a custom settings control panel to improve visibility and productivity for developers with low vision.
 
 **Architecture**:
-- **Themes**: 9 GitHub-based themes (light/dark variations with high contrast and colorblind support) in `themes/`, generated from `external/github-vscode-theme` (git submodule)
+- **Themes**: 9 GitHub-based themes (light/dark variations with high contrast and colorblind support) in `themes/`, generated from `external/github-vscode-theme` (git submodule pointing to https://github.com/thommadurasahan/github-vscode-theme.git)
 - **Extension Core**: `src/extension.ts` — activation logic, command handlers (TypeScript compiled to `out/extension.js`)
 - **Planned Features**: Custom Webview settings panel (not yet implemented), font bundling (not yet added)
 
