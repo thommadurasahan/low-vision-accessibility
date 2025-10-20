@@ -499,15 +499,20 @@ export class AccessibilityPanel {
                     <div class="setting-description">Choose a high-contrast theme optimized for low vision</div>
                     <div class="control-group">
                         <select id="workbench.colorTheme" onchange="applySetting('workbench.colorTheme', this.value)">
-                            <option value="GitHub Light Default (Low Vision)">GitHub Light Default</option>
-                            <option value="GitHub Light High Contrast (Low Vision)">GitHub Light High Contrast</option>
-                            <option value="GitHub Light Colorblind (Beta) (Low Vision)">GitHub Light Colorblind</option>
+                            <option value="Default Dark Modern">VS Code Dark Modern (Default)</option>
                             <option value="GitHub Dark Default (Low Vision)">GitHub Dark Default</option>
-                            <option value="GitHub Dark High Contrast (Low Vision)">GitHub Dark High Contrast</option>
                             <option value="GitHub Dark Colorblind (Beta) (Low Vision)">GitHub Dark Colorblind</option>
                             <option value="GitHub Dark Dimmed (Low Vision)">GitHub Dark Dimmed</option>
-                            <option value="GitHub Light (Low Vision)">GitHub Light (Legacy)</option>
-                            <option value="GitHub Dark (Low Vision)">GitHub Dark (Legacy)</option>
+                            <option value="GitHub Dark (Low Vision)">GitHub Dark Legacy</option>
+                            <option disabled>────────────────────</option>
+                            <option value="GitHub Light Default (Low Vision)">GitHub Light Default</option>
+                            <option value="GitHub Light Colorblind (Beta) (Low Vision)">GitHub Light Colorblind</option>
+                            <option value="GitHub Light (Low Vision)">GitHub Light Legacy</option>
+                            <option disabled>────────────────────</option>
+                            <option value="Default High Contrast">VS Code Derk High Contrast</option>
+                            <option value="Default High Contrast Light">VS Code Light High Contrast</option>
+                            <option value="GitHub Dark High Contrast (Low Vision)">GitHub Dark High Contrast</option>
+                            <option value="GitHub Light High Contrast (Low Vision)">GitHub Light High Contrast</option>
                         </select>
                     </div>
                 </div>
@@ -953,12 +958,14 @@ export class AccessibilityPanel {
                     <div class="setting-description">Default theme for dark mode</div>
                     <div class="control-group">
                         <select id="workbench.preferredDarkColorTheme" onchange="applySetting('workbench.preferredDarkColorTheme', this.value)">
-                            <option value="">System Default</option>
+                            <option value="Default Dark Modern">VS Code Dark Modern (Default)</option>
                             <option value="GitHub Dark Default (Low Vision)">GitHub Dark Default</option>
-                            <option value="GitHub Dark High Contrast (Low Vision)">GitHub Dark High Contrast</option>
                             <option value="GitHub Dark Colorblind (Beta) (Low Vision)">GitHub Dark Colorblind</option>
                             <option value="GitHub Dark Dimmed (Low Vision)">GitHub Dark Dimmed</option>
-                            <option value="GitHub Dark (Low Vision)">GitHub Dark (Legacy)</option>
+                            <option value="GitHub Dark (Low Vision)">GitHub Dark Legacy</option>
+                            <option disabled>────────────────────</option>
+                            <option value="Default High Contrast">VS Code Derk High Contrast</option>
+                            <option value="GitHub Dark High Contrast (Low Vision)">GitHub Dark High Contrast</option>
                         </select>
                     </div>
                 </div>
@@ -971,11 +978,13 @@ export class AccessibilityPanel {
                     <div class="setting-description">Default theme for light mode</div>
                     <div class="control-group">
                         <select id="workbench.preferredLightColorTheme" onchange="applySetting('workbench.preferredLightColorTheme', this.value)">
-                            <option value="">System Default</option>
+                            <option value="Default Light Modern">VS Code Light Modern (Default)</option>
                             <option value="GitHub Light Default (Low Vision)">GitHub Light Default</option>
-                            <option value="GitHub Light High Contrast (Low Vision)">GitHub Light High Contrast</option>
                             <option value="GitHub Light Colorblind (Beta) (Low Vision)">GitHub Light Colorblind</option>
-                            <option value="GitHub Light (Low Vision)">GitHub Light (Legacy)</option>
+                            <option value="GitHub Light (Low Vision)">GitHub Light Legacy</option>
+                            <option disabled>────────────────────</option>
+                            <option value="Default High Contrast Light">VS Code Light High Contrast</option>
+                            <option value="GitHub Light High Contrast (Low Vision)">GitHub Light High Contrast</option>
                         </select>
                     </div>
                 </div>
@@ -988,9 +997,10 @@ export class AccessibilityPanel {
                     <div class="setting-description">Default theme for high contrast mode</div>
                     <div class="control-group">
                         <select id="workbench.preferredHighContrastColorTheme" onchange="applySetting('workbench.preferredHighContrastColorTheme', this.value)">
-                            <option value="">System Default</option>
-                            <option value="GitHub Light High Contrast (Low Vision)">GitHub Light High Contrast</option>
-                            <option value="GitHub Dark High Contrast (Low Vision)">GitHub Dark High Contrast</option>
+                            <option value="Default High Contrast">VS Code Derk High Contrast</option>
+                            <option value="Default High Contrast Light">VS Code Light High Contrast</option>
+                            <option value="GitHub Dark High Contrast (Low Vision)">GitHub Dark High Contrast</option>    
+                            <option value="GitHub Light High Contrast (Low Vision)">GitHub Light High Contrast</option>                            
                         </select>
                     </div>
                 </div>
