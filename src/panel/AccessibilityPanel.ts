@@ -502,7 +502,7 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Color Theme<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Color Theme</span>
                         <span class="setting-key">workbench.colorTheme</span>
                     </div>
                     <div class="setting-description">Choose a high-contrast theme optimized for low vision</div>
@@ -531,7 +531,7 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Zoom Level<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Zoom Level</span>
                         <span class="setting-key">window.zoomLevel</span>
                     </div>
                     <div class="setting-description">Zoom the entire VS Code interface</div>
@@ -553,21 +553,21 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Font Family<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Font Family</span>
                         <span class="setting-key">editor.fontFamily</span>
                     </div>
                     <div class="setting-description">Use Atkinson Hyperlegible Mono for better readability</div>
                     <div class="control-group">
                         <select id="editor.fontFamily" onchange="applySetting('editor.fontFamily', this.value)">
                             <option value="'Atkinson Hyperlegible Mono', Consolas, 'Courier New', monospace">Atkinson Hyperlegible Mono (Recommended)</option>
-                            <option value="Consolas, 'Courier New', monospace">System Default</option>
+                            <option value="Consolas, 'Courier New', monospace">Consolas (Default)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Font Size<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Font Size</span>
                         <span class="setting-key">editor.fontSize</span>
                     </div>
                     <div class="setting-description">Larger font size for better readability (recommended: 16px)</div>
@@ -581,7 +581,7 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Line Height<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Line Height</span>
                         <span class="setting-key">editor.lineHeight</span>
                     </div>
                     <div class="setting-description">Space between lines (recommended: 1.6)</div>
@@ -595,7 +595,7 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Letter Spacing<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Letter Spacing</span>
                         <span class="setting-key">editor.letterSpacing</span>
                     </div>
                     <div class="setting-description">Space between characters (recommended: 0.5px)</div>
@@ -609,7 +609,7 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Mouse Wheel Zoom<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Mouse Wheel Zoom</span>
                         <span class="setting-key">editor.mouseWheelZoom</span>
                     </div>
                     <div class="setting-description">Zoom text with Ctrl+MouseWheel</div>
@@ -621,13 +621,13 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Cursor Style<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Cursor Style</span>
                         <span class="setting-key">editor.cursorStyle</span>
                     </div>
                     <div class="setting-description">Block cursor is more visible</div>
                     <div class="control-group">
                         <select id="editor.cursorStyle" onchange="applySetting('editor.cursorStyle', this.value)">
-                            <option value="line">Line</option>
+                            <option value="line">Line (Default)</option>
                             <option value="block">Block (Recommended)</option>
                             <option value="underline">Underline</option>
                             <option value="line-thin">Line Thin</option>
@@ -639,13 +639,13 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Cursor Blinking<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Cursor Blinking</span>
                         <span class="setting-key">editor.cursorBlinking</span>
                     </div>
                     <div class="setting-description">Solid cursor is easier to locate</div>
                     <div class="control-group">
                         <select id="editor.cursorBlinking" onchange="applySetting('editor.cursorBlinking', this.value)">
-                            <option value="blink">Blink</option>
+                            <option value="blink">Blink (Default)</option>
                             <option value="smooth">Smooth</option>
                             <option value="phase">Phase</option>
                             <option value="expand">Expand</option>
@@ -656,22 +656,22 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Match Brackets<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Match Brackets</span>
                         <span class="setting-key">editor.matchBrackets</span>
                     </div>
                     <div class="setting-description">Highlight matching brackets</div>
                     <div class="control-group">
                         <select id="editor.matchBrackets" onchange="applySetting('editor.matchBrackets', this.value)">
+                            <option value="always">Always (Default & Recommended)</option>
                             <option value="never">Never</option>
                             <option value="near">Near Cursor</option>
-                            <option value="always">Always (Recommended)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Bracket Pair Colorization<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Bracket Pair Colorization</span>
                         <span class="setting-key">editor.bracketPairColorization.enabled</span>
                     </div>
                     <div class="setting-description">Color matching brackets for easier identification</div>
@@ -683,38 +683,38 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Word Wrap<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Word Wrap</span>
                         <span class="setting-key">editor.wordWrap</span>
                     </div>
                     <div class="setting-description">Wrap long lines to avoid horizontal scrolling</div>
                     <div class="control-group">
                         <select id="editor.wordWrap" onchange="applySetting('editor.wordWrap', this.value)">
-                            <option value="off">Off</option>
-                            <option value="on">On (Recommended)</option>
-                            <option value="wordWrapColumn">At Column</option>
-                            <option value="bounded">Bounded</option>
+                            <option value="off">Off (Default) - Lines will never wrap.</option>
+                            <option value="on">On (Recommended) - Lines will wrap at the viewport width.</option>
+                            <option value="wordWrapColumn">At Column - Lines will wrap at "Editor: Word Wrap Column".</option>
+                            <option value="bounded">Bounded - lines will wrap at minimum of viewport and "Editor: Word wrap Column."</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Accessibility Support<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Accessibility Support</span>
                         <span class="setting-key">editor.accessibilitySupport</span>
                     </div>
                     <div class="setting-description">Optimize for screen readers and accessibility</div>
                     <div class="control-group">
                         <select id="editor.accessibilitySupport" onchange="applySetting('editor.accessibilitySupport', this.value)">
-                            <option value="auto">Auto</option>
-                            <option value="on">On (Recommended)</option>
-                            <option value="off">Off</option>
+                            <option value="auto">Auto (Default) - Use platform APIs to detect when a Screen Reader is attached.</option>
+                            <option value="on">On (Recommended) - Optimize for usage with a Screen Reader.</option>
+                            <option value="off">Off - Assume a Screen reader is not attached.</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Minimap<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Minimap</span>
                         <span class="setting-key">editor.minimap.enabled</span>
                     </div>
                     <div class="setting-description">Disable minimap for cleaner interface</div>
@@ -734,7 +734,7 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Terminal Font Size<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Terminal Font Size</span>
                         <span class="setting-key">terminal.integrated.fontSize</span>
                     </div>
                     <div class="setting-description">Terminal font size (recommended: 16px)</div>
@@ -748,14 +748,14 @@ export class AccessibilityPanel {
 
                 <div class="setting-item">
                     <div class="setting-header">
-                        <span class="setting-label">Terminal Cursor Style<span class="recommended-badge">RECOMMENDED</span></span>
+                        <span class="setting-label">Terminal Cursor Style</span>
                         <span class="setting-key">terminal.integrated.cursorStyle</span>
                     </div>
                     <div class="setting-description">Terminal cursor style</div>
                     <div class="control-group">
                         <select id="terminal.integrated.cursorStyle" onchange="applySetting('terminal.integrated.cursorStyle', this.value)">
+                            <option value="block">Block (Default & Recommended)</option>
                             <option value="line">Line</option>
-                            <option value="block">Block (Recommended)</option>
                             <option value="underline">Underline</option>
                         </select>
                     </div>
@@ -801,9 +801,9 @@ export class AccessibilityPanel {
                     <div class="setting-description">Show guides for bracket pairs</div>
                     <div class="control-group">
                         <select id="editor.guides.bracketPairs" onchange="applySetting('editor.guides.bracketPairs', this.value)">
-                            <option value="false">Off</option>
-                            <option value="active">Active Only</option>
-                            <option value="true">Always</option>
+                            <option value="true">True - Enables bracket pair guides</option>
+                            <option value="active">Active Only - Enables bracket pair guides only for the active bracket pair.</option>
+                            <option value="false">False (Defalut) - Disables bracket pair guides.</option>
                         </select>
                     </div>
                 </div>
@@ -856,10 +856,10 @@ export class AccessibilityPanel {
                     <div class="setting-description">How wrapped lines are indented</div>
                     <div class="control-group">
                         <select id="editor.wrappingIndent" onchange="applySetting('editor.wrappingIndent', this.value)">
-                            <option value="none">None</option>
-                            <option value="same">Same as Line</option>
-                            <option value="indent">Add Indent</option>
-                            <option value="deepIndent">Deep Indent</option>
+                            <option value="none">None - No indentation. Wrapped lines began at column 1.</option>
+                            <option value="same">Same as Line (Default) - Wrapped lines get the same indentation as the parent.</option>
+                            <option value="indent">Add Indent - Wrapped lines get + 1 indentation toward the parent.</option>
+                            <option value="deepIndent">Deep Indent - Wrapped lines get +2 indentation toward the parent.</option>
                         </select>
                     </div>
                 </div>
@@ -900,10 +900,10 @@ export class AccessibilityPanel {
                     <div class="setting-description">Show inline type hints and parameter names</div>
                     <div class="control-group">
                         <select id="editor.inlayHints.enabled" onchange="applySetting('editor.inlayHints.enabled', this.value)">
-                            <option value="on">On</option>
-                            <option value="off">Off</option>
-                            <option value="offUnlessPressed">Show on Ctrl+Alt</option>
-                            <option value="onUnlessPressed">Hide on Ctrl+Alt</option>
+                            <option value="on">On (Default) - Inlay hints are enabled.</option>
+                            <option value="onUnlessPressed">Hide on Ctrl+Alt - Inlay hints are showing by default and hide when holding Ctrl+Alt.</option>                            
+                            <option value="offUnlessPressed">Show on Ctrl+Alt - Inlay hints are hidden by default and show when holding Ctrl+Alt.</option>
+                            <option value="off">Off - Inlay hints are disabled.</option>
                         </select>
                     </div>
                 </div>
