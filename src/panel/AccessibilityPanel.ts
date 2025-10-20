@@ -421,12 +421,6 @@ export class AccessibilityPanel {
             outline-offset: -1px;
         }
 
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
         input[type="range"] {
             flex: 1;
             height: 6px;
@@ -614,8 +608,10 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Zoom text with Ctrl+MouseWheel</div>
                     <div class="control-group">
-                        <input type="checkbox" id="editor.mouseWheelZoom" onchange="applySetting('editor.mouseWheelZoom', this.checked)">
-                        <label for="editor.mouseWheelZoom">Enable</label>
+                        <select id="editor.mouseWheelZoom" onchange="applySetting('editor.mouseWheelZoom', this.value === 'true')">
+                            <option value="true">Enabled</option>
+                            <option value="false">Disabled</option>
+                        </select>
                     </div>
                 </div>
 
@@ -676,8 +672,10 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Color matching brackets for easier identification</div>
                     <div class="control-group">
-                        <input type="checkbox" id="editor.bracketPairColorization.enabled" onchange="applySetting('editor.bracketPairColorization.enabled', this.checked)">
-                        <label for="editor.bracketPairColorization.enabled">Enable</label>
+                        <select id="editor.bracketPairColorization.enabled" onchange="applySetting('editor.bracketPairColorization.enabled', this.value === 'true')">
+                            <option value="true">Enabled</option>
+                            <option value="false">Disabled</option>
+                        </select>
                     </div>
                 </div>
 
@@ -719,8 +717,10 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Disable minimap for cleaner interface</div>
                     <div class="control-group">
-                        <input type="checkbox" id="editor.minimap.enabled" onchange="applySetting('editor.minimap.enabled', this.checked)">
-                        <label for="editor.minimap.enabled">Enable</label>
+                        <select id="editor.minimap.enabled" onchange="applySetting('editor.minimap.enabled', this.value === 'true')">
+                            <option value="true">Enabled</option>
+                            <option value="false">Disabled</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -788,8 +788,10 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Show vertical lines for indentation levels</div>
                     <div class="control-group">
-                        <input type="checkbox" id="editor.guides.indentation" onchange="applySetting('editor.guides.indentation', this.checked)">
-                        <label for="editor.guides.indentation">Enable</label>
+                        <select id="editor.guides.indentation" onchange="applySetting('editor.guides.indentation', this.value === 'true')">
+                            <option value="true">Enabled</option>
+                            <option value="false">Disabled</option>
+                        </select>
                     </div>
                 </div>
 
@@ -815,8 +817,10 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Animate scrolling for smoother motion</div>
                     <div class="control-group">
-                        <input type="checkbox" id="editor.smoothScrolling" onchange="applySetting('editor.smoothScrolling', this.checked)">
-                        <label for="editor.smoothScrolling">Enable</label>
+                        <select id="editor.smoothScrolling" onchange="applySetting('editor.smoothScrolling', this.value === 'true')">
+                            <option value="true">Enabled</option>
+                            <option value="false">Disabled</option>
+                        </select>
                     </div>
                 </div>
 
@@ -915,8 +919,10 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Show parameter hints while typing</div>
                     <div class="control-group">
-                        <input type="checkbox" id="editor.parameterHints.enabled" onchange="applySetting('editor.parameterHints.enabled', this.checked)">
-                        <label for="editor.parameterHints.enabled">Enable</label>
+                        <select id="editor.parameterHints.enabled" onchange="applySetting('editor.parameterHints.enabled', this.value === 'true')">
+                            <option value="true">Enabled</option>
+                            <option value="false">Disabled</option>
+                        </select>
                     </div>
                 </div>
 
@@ -927,8 +933,10 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Show hover information</div>
                     <div class="control-group">
-                        <input type="checkbox" id="editor.hover.enabled" onchange="applySetting('editor.hover.enabled', this.checked)">
-                        <label for="editor.hover.enabled">Enable</label>
+                        <select id="editor.hover.enabled" onchange="applySetting('editor.hover.enabled', this.value === 'true')">
+                            <option value="true">Enabled</option>
+                            <option value="false">Disabled</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -1019,8 +1027,10 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Terminal cursor blinking style</div>
                     <div class="control-group">
-                        <input type="checkbox" id="terminal.integrated.cursorBlinking" onchange="applySetting('terminal.integrated.cursorBlinking', this.checked)">
-                        <label for="terminal.integrated.cursorBlinking">Enable</label>
+                        <select id="terminal.integrated.cursorBlinking" onchange="applySetting('terminal.integrated.cursorBlinking', this.value === 'true')">
+                            <option value="true">Enabled</option>
+                            <option value="false">Disabled</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -1047,11 +1057,12 @@ export class AccessibilityPanel {
             for (const [key, value] of Object.entries(settings)) {
                 const element = document.getElementById(key);
                 if (element) {
-                    if (element.type === 'checkbox') {
-                        element.checked = value || false;
-                    } else if (element.type === 'range') {
+                    if (element.type === 'range') {
                         element.value = value || 0;
                         updateRangeValue(element);
+                    } else if (element.tagName === 'SELECT' && (value === true || value === false)) {
+                        // For boolean dropdowns
+                        element.value = value.toString();
                     } else {
                         element.value = value || '';
                     }
