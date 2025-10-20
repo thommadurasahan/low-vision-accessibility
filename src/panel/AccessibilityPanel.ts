@@ -468,11 +468,8 @@ export class AccessibilityPanel {
             <button class="btn btn-primary" onclick="applyRecommended()">
                 ✨ Apply Recommended Settings
             </button>
-            <button class="btn btn-secondary" onclick="resetAllQuickSettings()">
-                🔄 Reset Quick Settings
-            </button>
-            <button class="btn btn-secondary" onclick="resetAllOtherSettings()">
-                🔄 Reset Other Settings
+            <button class="btn btn-secondary" onclick="resetAllSettings()">
+                🔄 Reset All Settings
             </button>
         </div>
 
@@ -1082,8 +1079,9 @@ export class AccessibilityPanel {
             vscode.postMessage({ command: 'applyRecommended' });
         }
 
-        function resetAllQuickSettings() {
-            const quickSettings = [
+        function resetAllSettings() {
+            const allSettings = [
+                // Quick Settings
                 'workbench.colorTheme',
                 'window.zoomLevel',
                 'editor.fontFamily',
@@ -1099,17 +1097,8 @@ export class AccessibilityPanel {
                 'editor.accessibilitySupport',
                 'editor.minimap.enabled',
                 'terminal.integrated.fontSize',
-                'terminal.integrated.cursorStyle'
-            ];
-            
-            vscode.postMessage({
-                command: 'resetSettings',
-                settingKeys: quickSettings
-            });
-        }
-
-        function resetAllOtherSettings() {
-            const otherSettings = [
+                'terminal.integrated.cursorStyle',
+                // Other Settings
                 'editor.guides.indentation',
                 'editor.guides.bracketPairs',
                 'editor.smoothScrolling',
@@ -1127,10 +1116,9 @@ export class AccessibilityPanel {
                 'terminal.integrated.lineHeight',
                 'terminal.integrated.cursorBlinking'
             ];
-            
             vscode.postMessage({
                 command: 'resetSettings',
-                settingKeys: otherSettings
+                settingKeys: allSettings
             });
         }
 
