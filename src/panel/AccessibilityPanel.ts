@@ -108,17 +108,10 @@ export class AccessibilityPanel {
 
     private _applyRecommendedSettings() {
         const recommendedSettings = {
-            // Workbench
-            'workbench.colorTheme': 'GitHub Dark High Contrast (Low Vision)',
-            
-            // Window
-            'window.zoomLevel': 1,
-            
             // Text Editor
+
             'editor.fontFamily': "'Atkinson Hyperlegible Mono', Consolas, 'Courier New', monospace",
             'editor.fontSize': 16,
-            'editor.lineHeight': 1.6,
-            'editor.letterSpacing': 0.5,
             'editor.mouseWheelZoom': true,
             'editor.cursorStyle': 'block',
             'editor.cursorBlinking': 'solid',
@@ -127,10 +120,27 @@ export class AccessibilityPanel {
             'editor.wordWrap': 'on',
             'editor.accessibilitySupport': 'on',
             'editor.minimap.enabled': false,
-            
-            // Terminal
+
+            "editor.guides.indentation": true,
+            "editor.guides.bracketPairs": 'active',
+            "editor.smoothScrolling": true,
+            "editor.wrappingIndent": 'same',
+            "editor.suggestFontSize": 16,
+            "editor.inlayHints.enabled": 'off',
+            "editor.parameterHints.enabled": true,
+            "editor.hover.enabled": true,
+
+            // Features
+
             'terminal.integrated.fontSize': 16,
-            'terminal.integrated.cursorStyle': 'block'
+            'terminal.integrated.cursorStyle': 'block',
+
+            "terminal.integrated.cursorBlinking": true,
+            "accessibility.signals.enabled": true,
+            "audioCues.lineHasError": 'on',
+            "audioCues.lineHasBreakpoint": 'on',
+            "audioCues.taskCompleted": 'on',
+            "audioCues.taskFailed": 'on'
         };
 
         const config = vscode.workspace.getConfiguration();
@@ -469,7 +479,7 @@ export class AccessibilityPanel {
                 ✨ Apply Recommended Settings
             </button>
             <button class="btn btn-secondary" onclick="resetAllSettings()">
-                🔄 Reset All Settings
+                🔄 Reset All Settings to VS Code Defaults
             </button>
         </div>
 
@@ -611,8 +621,8 @@ export class AccessibilityPanel {
                     <div class="setting-description">Zoom text with Ctrl+MouseWheel</div>
                     <div class="control-group">
                         <select id="editor.mouseWheelZoom" onchange="applySetting('editor.mouseWheelZoom', this.value === 'true')">
-                            <option value="true">Enabled</option>
-                            <option value="false">Disabled</option>
+                            <option value="true">Enabled (Recommended)</option>
+                            <option value="false">Disabled (Default)</option>
                         </select>
                     </div>
                 </div>
@@ -675,7 +685,7 @@ export class AccessibilityPanel {
                     <div class="setting-description">Color matching brackets for easier identification</div>
                     <div class="control-group">
                         <select id="editor.bracketPairColorization.enabled" onchange="applySetting('editor.bracketPairColorization.enabled', this.value === 'true')">
-                            <option value="true">Enabled</option>
+                            <option value="true">Enabled (Default & Recommended)</option>
                             <option value="false">Disabled</option>
                         </select>
                     </div>
@@ -720,8 +730,8 @@ export class AccessibilityPanel {
                     <div class="setting-description">Disable minimap for cleaner interface</div>
                     <div class="control-group">
                         <select id="editor.minimap.enabled" onchange="applySetting('editor.minimap.enabled', this.value === 'true')">
-                            <option value="true">Enabled</option>
-                            <option value="false">Disabled</option>
+                            <option value="true">Enabled (Default)</option>
+                            <option value="false">Disabled (Recommended)</option>
                         </select>
                     </div>
                 </div>
@@ -791,7 +801,7 @@ export class AccessibilityPanel {
                     <div class="setting-description">Show vertical lines for indentation levels</div>
                     <div class="control-group">
                         <select id="editor.guides.indentation" onchange="applySetting('editor.guides.indentation', this.value === 'true')">
-                            <option value="true">Enabled</option>
+                            <option value="true">Enabled (Default & Recommended)</option>
                             <option value="false">Disabled</option>
                         </select>
                     </div>
@@ -806,7 +816,7 @@ export class AccessibilityPanel {
                     <div class="control-group">
                         <select id="editor.guides.bracketPairs" onchange="applySetting('editor.guides.bracketPairs', this.value)">
                             <option value="true">True - Enables bracket pair guides</option>
-                            <option value="active">Active Only - Enables bracket pair guides only for the active bracket pair.</option>
+                            <option value="active">Active (Recommended) - Enables bracket pair guides only for the active bracket pair.</option>
                             <option value="false">False (Defalut) - Disables bracket pair guides.</option>
                         </select>
                     </div>
@@ -820,8 +830,8 @@ export class AccessibilityPanel {
                     <div class="setting-description">Animate scrolling for smoother motion</div>
                     <div class="control-group">
                         <select id="editor.smoothScrolling" onchange="applySetting('editor.smoothScrolling', this.value === 'true')">
-                            <option value="true">Enabled</option>
-                            <option value="false">Disabled</option>
+                            <option value="true">Enabled (Recommended)</option>
+                            <option value="false">Disabled (Default)</option>
                         </select>
                     </div>
                 </div>
@@ -922,7 +932,7 @@ export class AccessibilityPanel {
                     <div class="setting-description">Show parameter hints while typing</div>
                     <div class="control-group">
                         <select id="editor.parameterHints.enabled" onchange="applySetting('editor.parameterHints.enabled', this.value === 'true')">
-                            <option value="true">Enabled</option>
+                            <option value="true">Enabled (Default & Recommended)</option>
                             <option value="false">Disabled</option>
                         </select>
                     </div>
@@ -936,7 +946,7 @@ export class AccessibilityPanel {
                     <div class="setting-description">Show hover information</div>
                     <div class="control-group">
                         <select id="editor.hover.enabled" onchange="applySetting('editor.hover.enabled', this.value === 'true')">
-                            <option value="true">Enabled</option>
+                            <option value="true">Enable (Default & Recommended)d</option>
                             <option value="false">Disabled</option>
                         </select>
                     </div>
@@ -997,7 +1007,7 @@ export class AccessibilityPanel {
                     <div class="setting-description">Default theme for high contrast mode</div>
                     <div class="control-group">
                         <select id="workbench.preferredHighContrastColorTheme" onchange="applySetting('workbench.preferredHighContrastColorTheme', this.value)">
-                            <option value="Default High Contrast">VS Code Derk High Contrast</option>
+                            <option value="Default High Contrast">VS Code Derk High Contrast (Default)</option>
                             <option value="Default High Contrast Light">VS Code Light High Contrast</option>
                             <option value="GitHub Dark High Contrast (Low Vision)">GitHub Dark High Contrast</option>    
                             <option value="GitHub Light High Contrast (Low Vision)">GitHub Light High Contrast</option>                            
@@ -1035,8 +1045,8 @@ export class AccessibilityPanel {
                     <div class="setting-description">Terminal cursor blinking style</div>
                     <div class="control-group">
                         <select id="terminal.integrated.cursorBlinking" onchange="applySetting('terminal.integrated.cursorBlinking', this.value === 'true')">
-                            <option value="true">Enabled</option>
-                            <option value="false">Disabled</option>
+                            <option value="true">Enabled (Recomended)</option>
+                            <option value="false">Disabled (Default)</option>
                         </select>
                     </div>
                 </div>
