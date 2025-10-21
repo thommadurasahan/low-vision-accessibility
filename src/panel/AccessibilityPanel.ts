@@ -20,12 +20,26 @@ export class AccessibilityPanel {
         // This happens when the user closes the panel or when the panel is closed programmatically
         this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 
+        // Listen for configuration changes and update the webview
+        vscode.workspace.onDidChangeConfiguration(e => {
+            // Check if any of the accessibility-related settings changed
+            if (e.affectsConfiguration('editor') || 
+                e.affectsConfiguration('workbench') || 
+                e.affectsConfiguration('window') ||
+                e.affectsConfiguration('terminal') ||
+                e.affectsConfiguration('accessibility') ||
+                e.affectsConfiguration('audioCues')) {
+                // Send updated settings to webview
+                this._sendCurrentSettings();
+            }
+        }, null, this._disposables);
+
         // Handle messages from the webview
         this._panel.webview.onDidReceiveMessage(
-            message => {
+            async message => {
                 switch (message.command) {
                     case 'applySettings':
-                        this._applySettings(message.settings);
+                        await this._applySettings(message.settings);
                         return;
                     case 'resetSettings':
                         this._resetSettings(message.settingKeys);
@@ -74,20 +88,29 @@ export class AccessibilityPanel {
         this._panel.webview.html = this._getHtmlForWebview(webview);
     }
 
-    private _applySettings(settings: { [key: string]: any }) {
+    private async _applySettings(settings: { [key: string]: any }) {
         const config = vscode.workspace.getConfiguration();
         
         for (const [key, value] of Object.entries(settings)) {
             try {
-                config.update(key, value, vscode.ConfigurationTarget.Global);
+                // Update in Global (User) settings
+                await config.update(key, value, vscode.ConfigurationTarget.Global);
+                
+                // Log the update for debugging
+                console.log(`Updated ${key} to ${value}`);
+                
+                // Verify the setting was applied
+                const newValue = config.get(key);
+                console.log(`Verified ${key} is now: ${newValue}`);
+                
             } catch (error) {
                 vscode.window.showErrorMessage(`Failed to update ${key}: ${error}`);
+                console.error(`Error updating ${key}:`, error);
             }
         }
         
         vscode.window.showInformationMessage('Settings applied successfully!');
-        // Refresh the current settings display
-        this._sendCurrentSettings();
+        // Settings will be refreshed automatically via onDidChangeConfiguration listener
     }
 
     private _resetSettings(settingKeys: string[]) {
@@ -160,6 +183,16 @@ export class AccessibilityPanel {
 
     private _sendCurrentSettings() {
         const config = vscode.workspace.getConfiguration();
+        
+        // Log current font size from different scopes for debugging
+        const globalFontSize = config.inspect('editor.fontSize')?.globalValue;
+        const workspaceFontSize = config.inspect('editor.fontSize')?.workspaceValue;
+        const effectiveFontSize = config.get('editor.fontSize');
+        
+        console.log('Font Size Settings:');
+        console.log(`  Global: ${globalFontSize}`);
+        console.log(`  Workspace: ${workspaceFontSize}`);
+        console.log(`  Effective: ${effectiveFontSize}`);
         
         const currentSettings = {
             // Quick Settings - Workbench
@@ -598,9 +631,9 @@ export class AccessibilityPanel {
                         <span class="setting-label">Line Height</span>
                         <span class="setting-key">editor.lineHeight</span>
                     </div>
-                    <div class="setting-description">Space between lines (recommended: 1.6)</div>
+                    <div class="setting-description">Space between lines. value "0" means line hight will auto compute based on font size.</div>
                     <div class="range-container">
-                        <input type="range" id="editor.lineHeight" min="1" max="2.5" step="0.1" value="0" 
+                        <input type="range" id="editor.lineHeight" min="0" max="2.5" step="0.1" value="0" 
                                oninput="updateRangeValue(this)" 
                                onchange="applySetting('editor.lineHeight', parseFloat(this.value) || 0)">
                         <span class="range-value" id="editor.lineHeight-value">Auto</span>
@@ -1085,6 +1118,9 @@ export class AccessibilityPanel {
                     if (element.type === 'range') {
                         element.value = value || 0;
                         updateRangeValue(element);
+                    } else if (element.type === 'number') {
+                        // For number inputs
+                        element.value = value !== null && value !== undefined ? value : '';
                     } else if (element.tagName === 'SELECT' && (value === true || value === false)) {
                         // For boolean dropdowns
                         element.value = value.toString();
