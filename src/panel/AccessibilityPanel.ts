@@ -8,6 +8,7 @@ export class AccessibilityPanel {
     private readonly _panel: vscode.WebviewPanel;
     private readonly _extensionUri: vscode.Uri;
     private _disposables: vscode.Disposable[] = [];
+    private _configUpdateTimer: NodeJS.Timeout | undefined;
 
     private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
         this._panel = panel;
@@ -20,7 +21,7 @@ export class AccessibilityPanel {
         // This happens when the user closes the panel or when the panel is closed programmatically
         this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 
-        // Listen for configuration changes and update the webview
+        // Listen for configuration changes and update the webview (with debounce)
         vscode.workspace.onDidChangeConfiguration(e => {
             // Check if any of the accessibility-related settings changed
             if (e.affectsConfiguration('editor') || 
@@ -29,8 +30,14 @@ export class AccessibilityPanel {
                 e.affectsConfiguration('terminal') ||
                 e.affectsConfiguration('accessibility') ||
                 e.affectsConfiguration('audioCues')) {
-                // Send updated settings to webview
-                this._sendCurrentSettings();
+                
+                // Debounce to avoid rapid updates while dragging sliders
+                if (this._configUpdateTimer) {
+                    clearTimeout(this._configUpdateTimer);
+                }
+                this._configUpdateTimer = setTimeout(() => {
+                    this._sendCurrentSettings();
+                }, 300); // Wait 300ms after the last change for config to settle
             }
         }, null, this._disposables);
 
@@ -248,6 +255,11 @@ export class AccessibilityPanel {
 
     public dispose() {
         AccessibilityPanel.currentPanel = undefined;
+
+        // Clear the debounce timer if it exists
+        if (this._configUpdateTimer) {
+            clearTimeout(this._configUpdateTimer);
+        }
 
         // Clean up our resources
         this._panel.dispose();
@@ -923,7 +935,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Suggest Font Size</span>
                         <span class="setting-key">editor.suggestFontSize</span>
                     </div>
-                    <div class="setting-description">Font size for suggestions. (Defualt: 0 = Editor font size)</div>
+                    <div class="setting-description">Font size for suggestions. (Defualt: Auto = 0 = Editor font size)</div>
                     <div class="range-container">
                         <input type="range" id="editor.suggestFontSize" min="0" max="24" step="1" value="0" 
                                oninput="updateRangeValue(this)" 
@@ -937,7 +949,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Suggest Line Height</span>
                         <span class="setting-key">editor.suggestLineHeight</span>
                     </div>
-                    <div class="setting-description">Line height for suggestions. (Default: 0 = Editor line height)</div>
+                    <div class="setting-description">Line height for suggestions. (Default: Auto = 0 = Editor line height)</div>
                     <div class="range-container">
                         <input type="range" id="editor.suggestLineHeight" min="0" max="8" step="0.1" value="0" 
                                oninput="updateRangeValue(this)" 
@@ -1094,6 +1106,8 @@ export class AccessibilityPanel {
 
     <script>
         const vscode = acquireVsCodeApi();
+        // Track settings we just sent to VS Code to avoid UI reverting to stale values
+        const pendingUpdates = {};
 
         // Request current settings on load
         window.addEventListener('load', () => {
@@ -1110,10 +1124,22 @@ export class AccessibilityPanel {
 
         function updateUIWithSettings(settings) {
             for (const [key, value] of Object.entries(settings)) {
+                // If we have a pending update for this key and the incoming value
+                // doesn't match it yet, skip updating the control to avoid flicker
+                if (Object.prototype.hasOwnProperty.call(pendingUpdates, key)) {
+                    if (pendingUpdates[key] !== value) {
+                        // Stale (older) value received; wait for the next update
+                        continue;
+                    } else {
+                        // Values now match; clear the pending state and proceed to update UI
+                        delete pendingUpdates[key];
+                    }
+                }
                 const element = document.getElementById(key);
                 if (element) {
                     if (element.type === 'range') {
-                        element.value = value || 0;
+                        // For range inputs, properly handle numeric values including 0
+                        element.value = (value !== null && value !== undefined) ? value : 0;
                         updateRangeValue(element);
                     } else if (element.type === 'number') {
                         // For number inputs
@@ -1121,6 +1147,9 @@ export class AccessibilityPanel {
                     } else if (element.tagName === 'SELECT' && (value === true || value === false)) {
                         // For boolean dropdowns
                         element.value = value.toString();
+                    } else if (element.tagName === 'SELECT') {
+                        // For string dropdowns (e.g., editor.fontFamily), set exact value when available
+                        element.value = value ?? '';
                     } else {
                         element.value = value || '';
                     }
@@ -1130,6 +1159,8 @@ export class AccessibilityPanel {
 
         function applySetting(key, value) {
             const settings = { [key]: value };
+            // Mark this setting as pending so incoming stale update messages don't override UI
+            pendingUpdates[key] = value;
             vscode.postMessage({
                 command: 'applySettings',
                 settings: settings
@@ -1191,7 +1222,7 @@ export class AccessibilityPanel {
                 
                 // Special formatting for specific settings
                 if (element.id.includes('FontSize') || element.id.includes('ScrollbarSize')) {
-                    displayValue = value === 0 ? 0 : value + 'px';
+                    displayValue = value === 0 ? 'Auto' : value + 'px';
                 } else if (element.id.includes('LineHeight')) {
                     displayValue = value === 0 ? 'Auto' : value.toFixed(1);
                 } else if (element.id.includes('LetterSpacing')) {
