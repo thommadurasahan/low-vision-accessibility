@@ -461,6 +461,7 @@ export class AccessibilityPanel {
             font-family: var(--vscode-font-family);
             flex: 1;
             min-width: 200px;
+            cursor: pointer;
         }
 
         input[type="text"]:focus,
@@ -528,7 +529,7 @@ export class AccessibilityPanel {
                 <div>
                     <div class="section-title">⚡ Quick Settings</div>
                     <div class="section-description">
-                        High-impact settings for immediate readability and visual comfort
+                        High-impact settings for immediate readability and visual comfort.
                     </div>
                 </div>
             </div>
@@ -545,7 +546,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Color Theme</span>
                         <span class="setting-key">workbench.colorTheme</span>
                     </div>
-                    <div class="setting-description">Choose a high-contrast theme optimized for low vision</div>
+                    <div class="setting-description">You can try-out different themes including GitHub themes. High contrast and Colorblind-friendly options also available.</div>
                     <div class="control-group">
                         <select id="workbench.colorTheme" onchange="applySetting('workbench.colorTheme', this.value)">
                             <option value="Default Dark Modern">VS Code Dark Modern (Default)</option>
@@ -579,7 +580,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Zoom Level</span>
                         <span class="setting-key">window.zoomLevel</span>
                     </div>
-                    <div class="setting-description">Zoom the entire VS Code interface</div>
+                    <div class="setting-description">Zoom the entire VS Code interface. (Default: 0.0)</div>
                     <div class="range-container">
                         <input type="range" id="window.zoomLevel" min="-3" max="5" step="0.5" value="0" 
                                oninput="updateRangeValue(this)" 
@@ -601,7 +602,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Font Family</span>
                         <span class="setting-key">editor.fontFamily</span>
                     </div>
-                    <div class="setting-description">Use Atkinson Hyperlegible Mono for better readability</div>
+                    <div class="setting-description">Use Atkinson Hyperlegible Mono for better readability.</div>
                     <div class="control-group">
                         <select id="editor.fontFamily" onchange="applySetting('editor.fontFamily', this.value)">
                             <option value="'Atkinson Hyperlegible Mono', Consolas, 'Courier New', monospace">Atkinson Hyperlegible Mono (Recommended)</option>
@@ -615,7 +616,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Font Size</span>
                         <span class="setting-key">editor.fontSize</span>
                     </div>
-                    <div class="setting-description">Larger font size for better readability (recommended: 16px)</div>
+                    <div class="setting-description">Increase font size for better readability. (Default: 14px & Recommended: 16px)</div>
                     <div class="range-container">
                         <input type="range" id="editor.fontSize" min="12" max="24" step="1" value="14" 
                                oninput="updateRangeValue(this)" 
@@ -629,7 +630,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Line Height</span>
                         <span class="setting-key">editor.lineHeight</span>
                     </div>
-                    <div class="setting-description">Space between lines. value "0" means line height will auto compute based on font size.</div>
+                    <div class="setting-description">Default: 0 = Auto compute based on font size. 0 < value < 8 = Multiply by font size. 8 < value = Actual values in pixels.</div>
                     <div class="control-group">
                         <input type="number" id="editor.lineHeight" min="0" max="150" value="0" 
                                onchange="applySetting('editor.lineHeight', parseFloat(this.value) || 0)">
@@ -641,7 +642,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Letter Spacing</span>
                         <span class="setting-key">editor.letterSpacing</span>
                     </div>
-                    <div class="setting-description">Space between characters in pixels.</div>
+                    <div class="setting-description">Space between characters in pixels. (Default: 0px)</div>
                     <div class="range-container">
                         <input type="range" id="editor.letterSpacing" min="0" max="2" step="0.1" value="0" 
                                oninput="updateRangeValue(this)" 
@@ -655,7 +656,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Mouse Wheel Zoom</span>
                         <span class="setting-key">editor.mouseWheelZoom</span>
                     </div>
-                    <div class="setting-description">Zoom text with Ctrl+MouseWheel</div>
+                    <div class="setting-description">Zoom text with Ctrl + Mouse Wheel.</div>
                     <div class="control-group">
                         <select id="editor.mouseWheelZoom" onchange="applySetting('editor.mouseWheelZoom', this.value === 'true')">
                             <option value="true">Enabled (Recommended)</option>
@@ -669,7 +670,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Cursor Style</span>
                         <span class="setting-key">editor.cursorStyle</span>
                     </div>
-                    <div class="setting-description">Block cursor is more visible</div>
+                    <div class="setting-description">Block cursor is more visible.</div>
                     <div class="control-group">
                         <select id="editor.cursorStyle" onchange="applySetting('editor.cursorStyle', this.value)">
                             <option value="line">Line (Default)</option>
@@ -687,7 +688,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Cursor Blinking</span>
                         <span class="setting-key">editor.cursorBlinking</span>
                     </div>
-                    <div class="setting-description">Solid cursor is easier to locate</div>
+                    <div class="setting-description">Solid cursor is easier to locate.</div>
                     <div class="control-group">
                         <select id="editor.cursorBlinking" onchange="applySetting('editor.cursorBlinking', this.value)">
                             <option value="blink">Blink (Default)</option>
@@ -704,7 +705,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Match Brackets</span>
                         <span class="setting-key">editor.matchBrackets</span>
                     </div>
-                    <div class="setting-description">Highlight matching brackets</div>
+                    <div class="setting-description">Highlight matching brackets.</div>
                     <div class="control-group">
                         <select id="editor.matchBrackets" onchange="applySetting('editor.matchBrackets', this.value)">
                             <option value="always">Always (Default & Recommended)</option>
@@ -719,7 +720,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Bracket Pair Colorization</span>
                         <span class="setting-key">editor.bracketPairColorization.enabled</span>
                     </div>
-                    <div class="setting-description">Color matching brackets for easier identification</div>
+                    <div class="setting-description">Color matching brackets for easier identification.</div>
                     <div class="control-group">
                         <select id="editor.bracketPairColorization.enabled" onchange="applySetting('editor.bracketPairColorization.enabled', this.value === 'true')">
                             <option value="true">Enabled (Default & Recommended)</option>
@@ -733,7 +734,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Word Wrap</span>
                         <span class="setting-key">editor.wordWrap</span>
                     </div>
-                    <div class="setting-description">Wrap long lines to avoid horizontal scrolling</div>
+                    <div class="setting-description">Wrap long lines to avoid horizontal scrolling.</div>
                     <div class="control-group">
                         <select id="editor.wordWrap" onchange="applySetting('editor.wordWrap', this.value)">
                             <option value="off">Off (Default) - Lines will never wrap.</option>
@@ -749,7 +750,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Accessibility Support</span>
                         <span class="setting-key">editor.accessibilitySupport</span>
                     </div>
-                    <div class="setting-description">Optimize for screen readers and accessibility</div>
+                    <div class="setting-description">Optimize VS Code for screen readers and accessibility.</div>
                     <div class="control-group">
                         <select id="editor.accessibilitySupport" onchange="applySetting('editor.accessibilitySupport', this.value)">
                             <option value="auto">Auto (Default) - Use platform APIs to detect when a Screen Reader is attached.</option>
@@ -764,7 +765,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Minimap</span>
                         <span class="setting-key">editor.minimap.enabled</span>
                     </div>
-                    <div class="setting-description">Disable minimap for cleaner interface</div>
+                    <div class="setting-description">Disable inaccessible minimap.</div>
                     <div class="control-group">
                         <select id="editor.minimap.enabled" onchange="applySetting('editor.minimap.enabled', this.value === 'true')">
                             <option value="true">Enabled (Default)</option>
@@ -786,7 +787,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Terminal Font Size</span>
                         <span class="setting-key">terminal.integrated.fontSize</span>
                     </div>
-                    <div class="setting-description">Terminal font size (recommended: 16px)</div>
+                    <div class="setting-description">Control terminal font size in pixels. (Default: 14px & Recommended: 16px)</div>
                     <div class="range-container">
                         <input type="range" id="terminal.integrated.fontSize" min="12" max="24" step="1" value="14" 
                                oninput="updateRangeValue(this)" 
@@ -800,7 +801,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Terminal Cursor Style</span>
                         <span class="setting-key">terminal.integrated.cursorStyle</span>
                     </div>
-                    <div class="setting-description">Terminal cursor style</div>
+                    <div class="setting-description">Control terminal cursor style when terminal is focused.</div>
                     <div class="control-group">
                         <select id="terminal.integrated.cursorStyle" onchange="applySetting('terminal.integrated.cursorStyle', this.value)">
                             <option value="block">Block (Default & Recommended)</option>
@@ -818,7 +819,7 @@ export class AccessibilityPanel {
                 <div>
                     <div class="section-title">🔧 Other Settings</div>
                     <div class="section-description">
-                        Additional refinements for comfort and workflow optimization
+                        Additional refinements for comfort and workflow optimization.
                     </div>
                 </div>
             </div>
@@ -835,7 +836,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Indentation Guides</span>
                         <span class="setting-key">editor.guides.indentation</span>
                     </div>
-                    <div class="setting-description">Show vertical lines for indentation levels</div>
+                    <div class="setting-description">Show vertical lines for indentation levels.</div>
                     <div class="control-group">
                         <select id="editor.guides.indentation" onchange="applySetting('editor.guides.indentation', this.value === 'true')">
                             <option value="true">Enabled (Default & Recommended)</option>
@@ -849,7 +850,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Bracket Pair Guides</span>
                         <span class="setting-key">editor.guides.bracketPairs</span>
                     </div>
-                    <div class="setting-description">Show guides for bracket pairs</div>
+                    <div class="setting-description">Show guides for bracket pairs.</div>
                     <div class="control-group">
                         <select id="editor.guides.bracketPairs" onchange="applySetting('editor.guides.bracketPairs', this.value)">
                             <option value="true">True - Enables bracket pair guides</option>
@@ -864,7 +865,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Smooth Scrolling</span>
                         <span class="setting-key">editor.smoothScrolling</span>
                     </div>
-                    <div class="setting-description">Animate scrolling for smoother motion</div>
+                    <div class="setting-description">Animate scrolling for smoother motion.</div>
                     <div class="control-group">
                         <select id="editor.smoothScrolling" onchange="applySetting('editor.smoothScrolling', this.value === 'true')">
                             <option value="true">Enabled (Recommended)</option>
@@ -878,7 +879,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Vertical Scrollbar Size</span>
                         <span class="setting-key">editor.scrollbar.verticalScrollbarSize</span>
                     </div>
-                    <div class="setting-description">Width of vertical scrollbar. Default: 14px</div>
+                    <div class="setting-description">Width of vertical scrollbar. (Default: 14px)</div>
                     <div class="range-container">
                         <input type="range" id="editor.scrollbar.verticalScrollbarSize" min="10" max="30" step="2" value="14" 
                                oninput="updateRangeValue(this)" 
@@ -892,7 +893,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Horizontal Scrollbar Size</span>
                         <span class="setting-key">editor.scrollbar.horizontalScrollbarSize</span>
                     </div>
-                    <div class="setting-description">Height of horizontal scrollbar. Default: 12px</div>
+                    <div class="setting-description">Height of horizontal scrollbar. (Default: 12px)</div>
                     <div class="range-container">
                         <input type="range" id="editor.scrollbar.horizontalScrollbarSize" min="10" max="30" step="2" value="12" 
                                oninput="updateRangeValue(this)" 
@@ -906,7 +907,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Wrapping Indent</span>
                         <span class="setting-key">editor.wrappingIndent</span>
                     </div>
-                    <div class="setting-description">How wrapped lines are indented</div>
+                    <div class="setting-description">How wrapped lines are indented.</div>
                     <div class="control-group">
                         <select id="editor.wrappingIndent" onchange="applySetting('editor.wrappingIndent', this.value)">
                             <option value="none">None - No indentation. Wrapped lines began at column 1.</option>
@@ -922,12 +923,12 @@ export class AccessibilityPanel {
                         <span class="setting-label">Suggest Font Size</span>
                         <span class="setting-key">editor.suggestFontSize</span>
                     </div>
-                    <div class="setting-description">Font size for suggestions (0 = editor font size)</div>
+                    <div class="setting-description">Font size for suggestions. (Defualt: 0 = Editor font size)</div>
                     <div class="range-container">
                         <input type="range" id="editor.suggestFontSize" min="0" max="24" step="1" value="0" 
                                oninput="updateRangeValue(this)" 
                                onchange="applySetting('editor.suggestFontSize', parseInt(this.value))">
-                        <span class="range-value" id="editor.suggestFontSize-value">Auto</span>
+                        <span class="range-value" id="editor.suggestFontSize-value">0</span>
                     </div>
                 </div>
 
@@ -936,12 +937,12 @@ export class AccessibilityPanel {
                         <span class="setting-label">Suggest Line Height</span>
                         <span class="setting-key">editor.suggestLineHeight</span>
                     </div>
-                    <div class="setting-description">Line height for suggestions (0 = editor line height)</div>
+                    <div class="setting-description">Line height for suggestions. (Default: 0 = Editor line height)</div>
                     <div class="range-container">
                         <input type="range" id="editor.suggestLineHeight" min="0" max="8" step="0.1" value="0" 
                                oninput="updateRangeValue(this)" 
                                onchange="applySetting('editor.suggestLineHeight', parseInt(this.value))">
-                        <span class="range-value" id="editor.suggestLineHeight-value">Auto</span>
+                        <span class="range-value" id="editor.suggestLineHeight-value">0</span>
                     </div>
                 </div>
 
@@ -950,7 +951,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Inlay Hints</span>
                         <span class="setting-key">editor.inlayHints.enabled</span>
                     </div>
-                    <div class="setting-description">Show inline type hints and parameter names</div>
+                    <div class="setting-description">Show inline type hints and parameter names.</div>
                     <div class="control-group">
                         <select id="editor.inlayHints.enabled" onchange="applySetting('editor.inlayHints.enabled', this.value)">
                             <option value="on">On (Default) - Inlay hints are enabled.</option>
@@ -966,7 +967,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Parameter Hints</span>
                         <span class="setting-key">editor.parameterHints.enabled</span>
                     </div>
-                    <div class="setting-description">Show parameter hints while typing</div>
+                    <div class="setting-description">Show parameter hints while typin.g</div>
                     <div class="control-group">
                         <select id="editor.parameterHints.enabled" onchange="applySetting('editor.parameterHints.enabled', this.value === 'true')">
                             <option value="true">Enabled (Default & Recommended)</option>
@@ -980,7 +981,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Hover</span>
                         <span class="setting-key">editor.hover.enabled</span>
                     </div>
-                    <div class="setting-description">Show hover information</div>
+                    <div class="setting-description">Show hover information.</div>
                     <div class="control-group">
                         <select id="editor.hover.enabled" onchange="applySetting('editor.hover.enabled', this.value === 'true')">
                             <option value="true">Enable (Default & Recommended)</option>
@@ -1002,7 +1003,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Preferred Dark Theme</span>
                         <span class="setting-key">workbench.preferredDarkColorTheme</span>
                     </div>
-                    <div class="setting-description">Default theme for dark mode</div>
+                    <div class="setting-description">Default theme for dark mode.</div>
                     <div class="control-group">
                         <select id="workbench.preferredDarkColorTheme" onchange="applySetting('workbench.preferredDarkColorTheme', this.value)">
                             <option value="Default Dark Modern">VS Code Dark Modern (Default)</option>
@@ -1022,7 +1023,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Preferred Light Theme</span>
                         <span class="setting-key">workbench.preferredLightColorTheme</span>
                     </div>
-                    <div class="setting-description">Default theme for light mode</div>
+                    <div class="setting-description">Default theme for light mode.</div>
                     <div class="control-group">
                         <select id="workbench.preferredLightColorTheme" onchange="applySetting('workbench.preferredLightColorTheme', this.value)">
                             <option value="Default Light Modern">VS Code Light Modern (Default)</option>
@@ -1041,7 +1042,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Preferred High Contrast Theme</span>
                         <span class="setting-key">workbench.preferredHighContrastColorTheme</span>
                     </div>
-                    <div class="setting-description">Default theme for high contrast mode</div>
+                    <div class="setting-description">Default theme for high contrast mode.</div>
                     <div class="control-group">
                         <select id="workbench.preferredHighContrastColorTheme" onchange="applySetting('workbench.preferredHighContrastColorTheme', this.value)">
                             <option value="Default High Contrast">VS Code Derk High Contrast (Default)</option>
@@ -1065,7 +1066,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Terminal Line Height</span>
                         <span class="setting-key">terminal.integrated.lineHeight</span>
                     </div>
-                    <div class="setting-description">Line height in terminal. Default: 1.0</div>
+                    <div class="setting-description">This number is mutiplied by the terminal font size to get the actual line height in pixels. (Default: 1.0)</div>
                     <div class="range-container">
                         <input type="range" id="terminal.integrated.lineHeight" min="1" max="2" step="0.1" value="1" 
                                oninput="updateRangeValue(this)" 
@@ -1079,7 +1080,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Terminal Cursor Blinking</span>
                         <span class="setting-key">terminal.integrated.cursorBlinking</span>
                     </div>
-                    <div class="setting-description">Terminal cursor blinking style</div>
+                    <div class="setting-description">Terminal cursor blinking style.</div>
                     <div class="control-group">
                         <select id="terminal.integrated.cursorBlinking" onchange="applySetting('terminal.integrated.cursorBlinking', this.value === 'true')">
                             <option value="true">Enabled (Recomended)</option>
@@ -1190,7 +1191,7 @@ export class AccessibilityPanel {
                 
                 // Special formatting for specific settings
                 if (element.id.includes('FontSize') || element.id.includes('ScrollbarSize')) {
-                    displayValue = value === 0 ? 'Auto' : value + 'px';
+                    displayValue = value === 0 ? 0 : value + 'px';
                 } else if (element.id.includes('LineHeight')) {
                     displayValue = value === 0 ? 'Auto' : value.toFixed(1);
                 } else if (element.id.includes('LetterSpacing')) {
