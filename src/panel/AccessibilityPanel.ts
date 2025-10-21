@@ -367,9 +367,17 @@ export class AccessibilityPanel {
 
         .setting-header {
             display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: flex-start;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 8px;
+            row-gap: 2px;
+            column-gap: 12px;
+            min-width: 0;
+            word-break: break-word;
+            /* Responsive: allow spans to wrap and shrink */
+        }
         }
 
         .setting-label {
@@ -946,7 +954,7 @@ export class AccessibilityPanel {
                     <div class="setting-description">Show hover information</div>
                     <div class="control-group">
                         <select id="editor.hover.enabled" onchange="applySetting('editor.hover.enabled', this.value === 'true')">
-                            <option value="true">Enable (Default & Recommended)d</option>
+                            <option value="true">Enable (Default & Recommended)</option>
                             <option value="false">Disabled</option>
                         </select>
                     </div>
