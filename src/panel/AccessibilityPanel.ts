@@ -148,14 +148,12 @@ export class AccessibilityPanel {
             "editor.guides.bracketPairs": 'active',
             "editor.smoothScrolling": true,
             "editor.wrappingIndent": 'same',
-            "editor.suggestFontSize": 16,
             "editor.inlayHints.enabled": 'off',
             "editor.parameterHints.enabled": true,
             "editor.hover.enabled": true,
 
             // Features
 
-            'terminal.integrated.fontSize': 16,
             'terminal.integrated.cursorStyle': 'block',
 
             "terminal.integrated.cursorBlinking": true,
@@ -631,12 +629,10 @@ export class AccessibilityPanel {
                         <span class="setting-label">Line Height</span>
                         <span class="setting-key">editor.lineHeight</span>
                     </div>
-                    <div class="setting-description">Space between lines. value "0" means line hight will auto compute based on font size.</div>
-                    <div class="range-container">
-                        <input type="range" id="editor.lineHeight" min="0" max="2.5" step="0.1" value="0" 
-                               oninput="updateRangeValue(this)" 
+                    <div class="setting-description">Space between lines. value "0" means line height will auto compute based on font size.</div>
+                    <div class="control-group">
+                        <input type="number" id="editor.lineHeight" min="0" max="150" value="0" 
                                onchange="applySetting('editor.lineHeight', parseFloat(this.value) || 0)">
-                        <span class="range-value" id="editor.lineHeight-value">Auto</span>
                     </div>
                 </div>
 
@@ -645,7 +641,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Letter Spacing</span>
                         <span class="setting-key">editor.letterSpacing</span>
                     </div>
-                    <div class="setting-description">Space between characters (recommended: 0.5px)</div>
+                    <div class="setting-description">Space between characters in pixels.</div>
                     <div class="range-container">
                         <input type="range" id="editor.letterSpacing" min="0" max="2" step="0.1" value="0" 
                                oninput="updateRangeValue(this)" 
@@ -882,7 +878,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Vertical Scrollbar Size</span>
                         <span class="setting-key">editor.scrollbar.verticalScrollbarSize</span>
                     </div>
-                    <div class="setting-description">Width of vertical scrollbar (default: 14px)</div>
+                    <div class="setting-description">Width of vertical scrollbar. Default: 14px</div>
                     <div class="range-container">
                         <input type="range" id="editor.scrollbar.verticalScrollbarSize" min="10" max="30" step="2" value="14" 
                                oninput="updateRangeValue(this)" 
@@ -896,7 +892,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Horizontal Scrollbar Size</span>
                         <span class="setting-key">editor.scrollbar.horizontalScrollbarSize</span>
                     </div>
-                    <div class="setting-description">Height of horizontal scrollbar (default: 12px)</div>
+                    <div class="setting-description">Height of horizontal scrollbar. Default: 12px</div>
                     <div class="range-container">
                         <input type="range" id="editor.scrollbar.horizontalScrollbarSize" min="10" max="30" step="2" value="12" 
                                oninput="updateRangeValue(this)" 
@@ -942,7 +938,7 @@ export class AccessibilityPanel {
                     </div>
                     <div class="setting-description">Line height for suggestions (0 = editor line height)</div>
                     <div class="range-container">
-                        <input type="range" id="editor.suggestLineHeight" min="0" max="40" step="2" value="0" 
+                        <input type="range" id="editor.suggestLineHeight" min="0" max="8" step="0.1" value="0" 
                                oninput="updateRangeValue(this)" 
                                onchange="applySetting('editor.suggestLineHeight', parseInt(this.value))">
                         <span class="range-value" id="editor.suggestLineHeight-value">Auto</span>
@@ -960,7 +956,7 @@ export class AccessibilityPanel {
                             <option value="on">On (Default) - Inlay hints are enabled.</option>
                             <option value="onUnlessPressed">Hide on Ctrl+Alt - Inlay hints are showing by default and hide when holding Ctrl+Alt.</option>                            
                             <option value="offUnlessPressed">Show on Ctrl+Alt - Inlay hints are hidden by default and show when holding Ctrl+Alt.</option>
-                            <option value="off">Off - Inlay hints are disabled.</option>
+                            <option value="off">Off (Recommended) - Inlay hints are disabled.</option>
                         </select>
                     </div>
                 </div>
@@ -1069,7 +1065,7 @@ export class AccessibilityPanel {
                         <span class="setting-label">Terminal Line Height</span>
                         <span class="setting-key">terminal.integrated.lineHeight</span>
                     </div>
-                    <div class="setting-description">Line height in terminal (1.0 = normal)</div>
+                    <div class="setting-description">Line height in terminal. Default: 1.0</div>
                     <div class="range-container">
                         <input type="range" id="terminal.integrated.lineHeight" min="1" max="2" step="0.1" value="1" 
                                oninput="updateRangeValue(this)" 
