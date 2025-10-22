@@ -11,14 +11,32 @@ This file provides actionable instructions for AI assistants working on this VS 
 **Architecture**:
 - **Themes**: 9 GitHub-based themes (light/dark variations with high contrast and colorblind support) in `themes/`, generated from `external/github-vscode-theme` (git submodule pointing to https://github.com/thommadurasahan/github-vscode-theme.git)
 - **Fonts**: Atkinson Hyperlegible Next Mono font files copied from `external/atkinson-hyperlegible-next-mono` (git submodule pointing to https://github.com/thommadurasahan/atkinson-hyperlegible-next-mono.git) to `assets/fonts/`
-- **Extension Core**: `src/extension.ts` — activation logic, command handlers (TypeScript compiled to `out/extension.js`)
-- **Planned Features**: Custom Webview settings panel (not yet implemented)
+- **Extension Core**: `src/extension.ts` — activation logic, command handlers, font installation prompt (TypeScript compiled to `out/extension.js`)
+- **Settings Panel**: `src/panel/AccessibilityPanel.ts` — Webview-based settings control panel with comprehensive accessibility options
 
 ## Core Features (Implementation Status)
 
 ✅ **Color Theme Pack** — 9 themes registered in `package.json`, JSONs auto-generated via `npm run build:themes`
+  - GitHub Light Default, Light High Contrast, Light Colorblind
+  - GitHub Dark Default, Dark High Contrast, Dark Colorblind, Dark Dimmed
+  - GitHub Light Legacy, GitHub Dark Legacy
+
 ✅ **Font Pack** — Atkinson Hyperlegible Next Mono TTF files in `assets/fonts/`, copied via `npm run build:fonts`
-✅ **Accessibility Settings Panel** — Webview panel implemented in `src/panel/AccessibilityPanel.ts` with Quick Settings and Other Settings sections
+  - Font install prompt on first activation
+  - Command to open fonts folder for manual installation
+
+✅ **Accessibility Settings Panel** — Fully implemented Webview panel in `src/panel/AccessibilityPanel.ts`
+  - **Quick Settings**: 15+ high-impact settings (theme, zoom, font, cursor, terminal)
+  - **Other Settings**: 15+ refinement settings (guides, scrollbars, workbench themes, accessibility features)
+  - **Apply Recommended Config**: One-click button with optimized low-vision settings
+  - **Reset Functionality**: Reset all settings to VS Code defaults
+  - **Real-time Updates**: Settings apply immediately with debounced config change listener (300ms)
+  - **Singleton Pattern**: Panel reuses existing instance when reopened
+  - **Responsive UI**: Clean interface using VS Code CSS variables
+
+✅ **Commands**
+  - `low-vision-accessibility.openAccessibilityPanel` — Opens the settings panel
+  - `low-vision-accessibility.openFontsFolder` — Reveals fonts folder in file explorer
 
 ## Critical Commands & Workflows
 
@@ -48,11 +66,13 @@ Press `F5` in VS Code → opens Extension Development Host with extension loaded
 
 ## Project Conventions
 
-**Activation**: Extension activates on `onStartupFinished` (see `package.json.activationEvents`). The `openAccessibilityPanel` command is registered but shows a placeholder message.
+**Activation**: Extension activates on `onStartupFinished` (see `package.json.activationEvents`). On first activation, shows a one-time prompt to install the Atkinson Hyperlegible Mono font.
 
 **Command Pattern**: All commands start with `low-vision-accessibility.` prefix. Register in `package.json.contributes.commands` AND implement in `src/extension.ts` via `vscode.commands.registerCommand()`.
 
 **Theme Naming**: Follow pattern `GitHub <Variant> (Low Vision)`, e.g., `GitHub Dark High Contrast (Low Vision)`. Map to correct `uiTheme` type (`vs`, `vs-dark`, `hc-light`, `hc-black`).
+
+**Settings Management**: AccessibilityPanel uses `vscode.workspace.getConfiguration()` to read/write settings. All updates target `ConfigurationTarget.Global` (User settings). Panel tracks pending updates to avoid UI flicker during config changes.
 
 **DO NOT** edit `external/github-vscode-theme/` directly — it's a git submodule. Modify `scripts/build-github-theme.js` if theme build needs changes.
 
@@ -64,23 +84,33 @@ Press `F5` in VS Code → opens Extension Development Host with extension loaded
 3. Push disposable to `context.subscriptions`
 4. Run `npm run compile` before testing
 
-### Implement the Settings Panel (COMPLETED ✅)
-- ✅ Created `src/panel/AccessibilityPanel.ts` as a Webview
-- ✅ Integrated with `extension.ts` via `openAccessibilityPanel` command
-- Panel features:
-  - **Quick Settings**: High-impact settings (theme, zoom, font, editor basics, terminal)
-  - **Other Settings**: Additional refinements (guides, scrollbars, workbench preferences, accessibility features)
-  - **Grouped Controls**: Organized by Workbench, Window, Text Editor, and Features
-  - **Apply Recommended Config** button: One-click setup for low vision users
-  - **Reset Buttons**: Separate reset for Quick Settings and Other Settings
-  - **Real-time Updates**: Settings apply immediately via VS Code API
-  - **Responsive UI**: Clean, high-contrast interface following VS Code design
+### Modify the Settings Panel
+The AccessibilityPanel is fully implemented with:
+- **Singleton Pattern**: `AccessibilityPanel.createOrShow()` reuses existing panel or creates new one
+- **Message Handling**: Webview communicates via `postMessage()` for settings updates
+- **Settings Categories**:
+  - **Quick Settings**: 15+ high-impact controls (theme, zoom, font family, font size, line height, letter spacing, cursor style, bracket matching, word wrap, minimap, terminal)
+  - **Other Settings**: 15+ refinement controls (guides, scrollbars, wrapping indent, suggestions, inlay hints, preferred themes, terminal line height)
+- **Debounced Updates**: Config changes trigger UI refresh after 300ms to avoid rapid updates
+- **Recommended Preset**: Hardcoded optimal settings for low vision (16px font, block cursor, word wrap on, etc.)
+- **Reset Functionality**: Resets settings to VS Code defaults by setting values to `undefined`
 
-### Add Font Support (TODO)
-1. ✅ Font files already available in `assets/fonts/` (run `npm run build:fonts` to copy)
-2. In settings panel, set `editor.fontFamily` to `'Atkinson Hyperlegible Mono'` when user selects font
-3. Provide toggle to restore original font
-4. Note: VS Code will automatically find and use fonts from the extension's assets folder once installed
+To add a new setting:
+1. Add control HTML in `_getHtmlForWebview()` method
+2. Add setting key to `currentSettings` object in `_sendCurrentSettings()`
+3. Handle in `applySetting()` JavaScript function in webview
+4. Test that setting applies and persists correctly
+
+### Font Installation Flow
+✅ **Implemented**: Font installation prompt appears on first activation
+- Uses `context.globalState` to track if prompt has been shown (`lowVision.fontInstallPromptShown`)
+- Provides three options:
+  1. **Install Font Now**: Opens fonts folder in file explorer with .ttf files
+  2. **How to Install**: Opens GitHub repo with font documentation
+  3. **Don't show again**: Marks prompt as shown permanently
+- Font files are bundled in `assets/fonts/` (TTF format)
+- Users can manually trigger prompt via `low-vision-accessibility.openFontsFolder` command
+- Panel includes font family selector: "Atkinson Hyperlegible Mono" or "Consolas (Default)"
 
 ### Update Themes
 - Rebuild themes: `npm run build:themes` (requires network on first run)
@@ -96,7 +126,10 @@ Press `F5` in VS Code → opens Extension Development Host with extension loaded
 **VS Code APIs**: Extension uses `vscode` module. Key namespaces:
 - `vscode.commands` — register commands
 - `vscode.workspace.getConfiguration()` — read/write user settings
-- `vscode.window.createWebviewPanel()` — for settings UI (to be implemented)
+- `vscode.window.createWebviewPanel()` — create settings UI webview
+- `vscode.workspace.onDidChangeConfiguration()` — listen for config changes
+- `vscode.workspace.fs` — access file system for fonts
+- `vscode.env.openExternal()` — open URLs in browser
 
 ## Testing & Debugging
 
@@ -125,16 +158,17 @@ Press `F5` in VS Code → opens Extension Development Host with extension loaded
 | Add/modify commands | `package.json`, `src/extension.ts` |
 | Theme generation | `scripts/build-github-theme.js`, `external/github-vscode-theme/` |
 | Font copying | `scripts/build-fonts.js`, `external/atkinson-hyperlegible-next-mono/` |
-| Settings panel | `src/panel/AccessibilityPanel.ts` (TO BE CREATED) |
-| Font integration | `assets/fonts/` (TO BE CREATED), settings panel logic |
+| Settings panel | `src/panel/AccessibilityPanel.ts` |
+| Font integration | `assets/fonts/`, `src/extension.ts` (prompt logic) |
 | Tests | `src/test/extension.test.ts` |
 
 ## Questions to Clarify with Repository Owner
 
-- Should Atkinson Hyperlegible font be bundled as WOFF2 or TTF? Any licensing considerations?
-- Preferred Webview framework (vanilla HTML/CSS/JS vs. React/Svelte)?
-- Should "Recommended Settings" preset be configurable or hardcoded?
-- Publish as `.vsix` locally or to VS Marketplace?
+- ✅ Font format decided: TTF files bundled in `assets/fonts/`
+- ✅ Webview framework: Vanilla HTML/CSS/JS (no framework dependencies)
+- ✅ Recommended settings: Hardcoded in `_applyRecommendedSettings()` method
+- Should the extension be published to VS Marketplace or distributed as `.vsix`?
+- Are there additional accessibility settings to include in future updates?
 
 ---
 
