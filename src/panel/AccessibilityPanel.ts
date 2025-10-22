@@ -316,37 +316,52 @@ export class AccessibilityPanel {
             gap: 12px;
             margin-bottom: 32px;
             padding: 16px;
-            background-color: var(--vscode-editor-inactiveSelectionBackground);
+            background-color: var(--vscode-editor-background);
             border-radius: 6px;
             border: 1px solid var(--vscode-panel-border);
         }
 
         .btn {
-            padding: 10px 20px;
-            border: none;
+            padding: 6px 14px;
+            min-height: 28px;
+            border: 1px solid var(--vscode-button-border, transparent);
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
-            transition: all 0.2s;
+            transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
         }
 
+        /* Primary button styled like Marketplace Install */
         .btn-primary {
-            background-color: var(--vscode-button-background);
-            color: var(--vscode-button-foreground);
+            background-color: var(--vscode-extensionButton-prominentBackground, var(--vscode-button-background));
+            color: var(--vscode-extensionButton-prominentForeground, var(--vscode-button-foreground));
+            border-color: var(--vscode-button-border, transparent);
         }
 
         .btn-primary:hover {
-            background-color: var(--vscode-button-hoverBackground);
+            background-color: var(--vscode-extensionButton-prominentHoverBackground, var(--vscode-button-hoverBackground));
         }
 
+        .btn-primary:focus {
+            outline: 1px solid var(--vscode-focusBorder);
+            outline-offset: 2px;
+        }
+
+        /* Secondary button similar to Uninstall/Manage */
         .btn-secondary {
             background-color: var(--vscode-button-secondaryBackground);
             color: var(--vscode-button-secondaryForeground);
+            border-color: var(--vscode-button-border, transparent);
         }
 
         .btn-secondary:hover {
             background-color: var(--vscode-button-secondaryHoverBackground);
+        }
+
+        .btn-secondary:focus {
+            outline: 1px solid var(--vscode-focusBorder);
+            outline-offset: 2px;
         }
 
         .section {
