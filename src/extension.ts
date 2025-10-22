@@ -21,6 +21,35 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(openPanelCommand);
 
+	// Register the command to open the fonts folder
+	const openFontsFolderCommand = vscode.commands.registerCommand(
+		'low-vision-accessibility.openFontsFolder',
+		async () => {
+			try {
+				const fontsDir = vscode.Uri.joinPath(context.extensionUri, 'assets', 'fonts');
+				// Try to reveal the first TTF file for easier install
+				let revealUri: vscode.Uri | undefined;
+				try {
+					const entries = await vscode.workspace.fs.readDirectory(fontsDir);
+					const ttf = entries.find(([name, type]) => type === vscode.FileType.File && name.toLowerCase().endsWith('.ttf'));
+					if (ttf) {
+						revealUri = vscode.Uri.joinPath(fontsDir, ttf[0]);
+					}
+				} catch {
+					// Fallback to folder reveal
+				}
+
+				await vscode.commands.executeCommand('revealFileInOS', revealUri ?? fontsDir);
+				vscode.window.showInformationMessage('Double-click a .ttf file to install the Atkinson Hyperlegible Mono font.');
+			} catch (err) {
+				console.error('Failed to open fonts folder', err);
+				vscode.window.showErrorMessage('Could not open the fonts folder. Please check the extension installation.');
+			}
+		}
+	);
+
+	context.subscriptions.push(openFontsFolderCommand);
+
 	// Show a one-time prompt guiding the user to install the Atkinson Hyperlegible Mono font
 	maybePromptForFontInstall(context).catch(err => console.error('Font prompt error', err));
 }

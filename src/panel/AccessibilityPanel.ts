@@ -541,7 +541,7 @@ export class AccessibilityPanel {
 <body>
     <div class="container">
         <h1>🔍 Low Vision Accessibility Settings</h1>
-        <p class="subtitle">Customize Visual Studio Code for optimal readability and comfort</p>
+        <p class="subtitle">Customize Visual Studio Code for optimal readability and comfort.</p>
 
         <div class="action-bar">
             <button class="btn btn-primary" onclick="applyRecommended()">

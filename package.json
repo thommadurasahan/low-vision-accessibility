@@ -17,8 +17,12 @@
     "commands": [
       {
         "command": "low-vision-accessibility.openAccessibilityPanel",
-        "title": "Open Low Vision Accessibility Panel"
-}
+        "title": "Low Vision: Open Accessibility Settings"
+      },
+      {
+        "command": "low-vision-accessibility.openFontsFolder",
+        "title": "Low Vision: Open Fonts Folder"
+      }
     ],
     "themes": [
       {
