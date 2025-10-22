@@ -295,6 +295,8 @@ export class AccessibilityPanel {
 
         .container {
             max-width: 1200px;
+            /* Enforce a minimum readable width; below this, horizontal scrolling will appear */
+            min-width: 300px;
             margin: 0 auto;
         }
 
