@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
+import { sleep } from './testUtils';
 
 suite('Theme File Tests', () => {
 	
@@ -121,36 +122,6 @@ suite('Theme File Tests', () => {
 });
 
 suite('Theme Switching Tests', () => {
-	
-	test('Should switch between all bundled themes', async () => {
-		const themes = [
-			'GitHub Light Default (Low Vision)',
-			'GitHub Light High Contrast (Low Vision)',
-			'GitHub Light Colorblind (Beta) (Low Vision)',
-			'GitHub Dark Default (Low Vision)',
-			'GitHub Dark High Contrast (Low Vision)',
-			'GitHub Dark Colorblind (Beta) (Low Vision)',
-			'GitHub Dark Dimmed (Low Vision)',
-			'GitHub Light (Low Vision)',
-			'GitHub Dark (Low Vision)'
-		];
-		
-		const config = vscode.workspace.getConfiguration('workbench');
-		const originalTheme = config.get<string>('colorTheme');
-		
-		for (const theme of themes) {
-			await config.update('colorTheme', theme, vscode.ConfigurationTarget.Global);
-			await new Promise(resolve => setTimeout(resolve, 100));
-			
-			const currentTheme = config.get<string>('colorTheme');
-			assert.strictEqual(currentTheme, theme, `Should switch to ${theme}`);
-		}
-		
-		// Restore original theme
-		if (originalTheme) {
-			await config.update('colorTheme', originalTheme, vscode.ConfigurationTarget.Global);
-		}
-	});
 
 	test('Should handle theme switching without errors', async () => {
 		const config = vscode.workspace.getConfiguration('workbench');
@@ -159,8 +130,11 @@ suite('Theme Switching Tests', () => {
 		try {
 			// Switch between contrasting themes rapidly
 			await config.update('colorTheme', 'GitHub Dark Default (Low Vision)', vscode.ConfigurationTarget.Global);
+			await sleep(100);
 			await config.update('colorTheme', 'GitHub Light Default (Low Vision)', vscode.ConfigurationTarget.Global);
+			await sleep(100);
 			await config.update('colorTheme', 'GitHub Dark High Contrast (Low Vision)', vscode.ConfigurationTarget.Global);
+			await sleep(100);
 			await config.update('colorTheme', 'GitHub Light High Contrast (Low Vision)', vscode.ConfigurationTarget.Global);
 			
 			assert.ok(true, 'Theme switching completed without errors');

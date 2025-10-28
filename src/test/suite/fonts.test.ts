@@ -58,8 +58,9 @@ suite('Font Settings Tests', () => {
 		const atkinsonFont = "'Atkinson Hyperlegible Mono', Consolas, 'Courier New', monospace";
 		await config.update('fontFamily', atkinsonFont, vscode.ConfigurationTarget.Global);
 		
-		const currentFont = config.get<string>('fontFamily');
-		assert.ok(currentFont?.includes('Atkinson Hyperlegible Mono'), 'Should set Atkinson font');
+		// Use inspect to check global value
+		const inspected = config.inspect<string>('fontFamily');
+		assert.strictEqual(inspected?.globalValue, atkinsonFont, 'Should set Atkinson font in global settings');
 		
 		// Restore
 		await config.update('fontFamily', originalFont, vscode.ConfigurationTarget.Global);
@@ -85,13 +86,13 @@ suite('Font Settings Tests', () => {
 		
 		// Set Atkinson
 		await config.update('fontFamily', "'Atkinson Hyperlegible Mono'", vscode.ConfigurationTarget.Global);
-		let font = config.get<string>('fontFamily');
-		assert.ok(font?.includes('Atkinson Hyperlegible Mono'));
+		let inspected = config.inspect<string>('fontFamily');
+		assert.strictEqual(inspected?.globalValue, "'Atkinson Hyperlegible Mono'", 'Should set Atkinson font');
 		
 		// Set Consolas
 		await config.update('fontFamily', "Consolas", vscode.ConfigurationTarget.Global);
-		font = config.get<string>('fontFamily');
-		assert.ok(font?.includes('Consolas'));
+		inspected = config.inspect<string>('fontFamily');
+		assert.strictEqual(inspected?.globalValue, "Consolas", 'Should set Consolas font');
 		
 		// Restore
 		await config.update('fontFamily', originalFont, vscode.ConfigurationTarget.Global);
